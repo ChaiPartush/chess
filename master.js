@@ -8,3 +8,4 @@ function include(file) {
 
 include('client.js');
 include('coordinates.js');
+include('pieces.js')
