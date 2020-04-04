@@ -14,9 +14,9 @@ for (var row = 0; row <= 7; row++) {
 var IdsSquaresOfClicksArray = [];
 
 function ClickSquareOnBoard(id) {
-    var squareContent = document.getElementById(id).textContent;
+    var currentSquareContent = document.getElementById(id).textContent;
     if (IdsSquaresOfClicksArray.length < 2) {
-        if (IdsSquaresOfClicksArray.length == 0 && squareContent == "") {
+        if (IdsSquaresOfClicksArray.length == 0 && currentSquareContent == "") {
             alert("Please pick on of the Pieces")
         }
         else {
@@ -25,14 +25,20 @@ function ClickSquareOnBoard(id) {
 
     }
 
+
     if (IdsSquaresOfClicksArray.length == 2) {
-        var soldier = document.getElementById(IdsSquaresOfClicksArray[0]).textContent;
-        var squaresCordinatesArray = getCoordinatesFromArray(IdsSquaresOfClicksArray);
-        if (checkIfSoldierCanDoThisMovment(soldier, squaresCordinatesArray)) {
-            moveSoldierOnBoard(IdsSquaresOfClicksArray);
+        if (IdsSquaresOfClicksArray[0] === IdsSquaresOfClicksArray[1]) {
+            alert("Please enter the place you want to move this piece")
         }
         else {
-            alert("This soldier cant do this movement")
+            var soldier = document.getElementById(IdsSquaresOfClicksArray[0]).textContent;
+            var squaresCordinatesArray = getCoordinatesFromArray(IdsSquaresOfClicksArray);
+            if (checkIfSoldierCanDoThisMovment(soldier, squaresCordinatesArray)) {
+                moveSoldierOnBoard(IdsSquaresOfClicksArray);
+            }
+            else {
+                alert("This soldier cant do this movement")
+            }
         }
         IdsSquaresOfClicksArray.length = 0;
     }
@@ -69,7 +75,7 @@ function ClickSquareOnBoard(id) {
         }
 
         if (soldierName === Pieces.BLACK_PAWN || soldierName === Pieces.WHITE_PAWN) {
-            return secondSquareCol == firstSquareCol && firstSquareRow - 1 == secondSquareRow;
+            return secondSquareCol === firstSquareCol && firstSquareRow - 1 === secondSquareRow;
         }
 
         if (soldierName === Pieces.BLACK_BISHOP || soldierName === Pieces.WHITE_BISHOP) {
@@ -89,6 +95,8 @@ function ClickSquareOnBoard(id) {
         document.getElementById(IdsSquaresOfClicksArray[1]).innerHTML = firstClickContent;
         document.getElementById(IdsSquaresOfClicksArray[0]).innerHTML = "";
     }
+
+
 
 }
 
