@@ -35,6 +35,9 @@ const AllPieces = {
     Empty: 'empty'
 }
 
+const NUM_OF_SECOND_ROW_OF_BLACK_PLAYER = 1;
+const NUM_OF_SECOND_ROW_OF_WHITE_PLAYER = 6;
+
 
 // var UnicodePieces = {
 //     WHITE_KING: '\u{2654}',

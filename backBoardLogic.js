@@ -53,7 +53,6 @@ class backBoardLogic {
         const firstSquare = arrayOfSquareObject[0];
         const secondSquare = arrayOfSquareObject[1];
         const soldierName = this.boardGame[firstSquare.row][firstSquare.col].pieceName;
-        const soldierColor = this.boardGame[firstSquare.row][firstSquare.col].pieceColor;
 
         switch (soldierName) {
 
@@ -64,10 +63,7 @@ class backBoardLogic {
                 return secondSquare.col == firstSquare.col || secondSquare.row == firstSquare.row;
 
             case AllPieces.BLACK_PAWN.piece:
-                if (soldierColor == AllPieces.BLACK_PAWN.color) {
-                    return (secondSquare.col == firstSquare.col) && (firstSquare.row + 1 === secondSquare.row);
-                }
-                else return (secondSquare.col == firstSquare.col) && (firstSquare.row - 1 == secondSquare.row);
+                return this.pawnMovement(firstSquare, secondSquare)
 
             case AllPieces.BLACK_BISHOP.piece:
                 return Math.abs(secondSquare.col - firstSquare.col) > 1 && Math.abs(secondSquare.row - firstSquare.row) > 1;
@@ -80,6 +76,22 @@ class backBoardLogic {
         }
     }
 
+
+    pawnMovement(firstSquare, secondSquare) {
+        const soldierColor = this.boardGame[firstSquare.row][firstSquare.col].pieceColor;
+        if (soldierColor == AllPieces.BLACK_PAWN.color) {
+            if (firstSquare.row == NUM_OF_SECOND_ROW_OF_BLACK_PLAYER) {
+                return secondSquare.col == firstSquare.col && firstSquare.row + 2 === secondSquare.row;
+            }
+            else return secondSquare.col == firstSquare.col && firstSquare.row + 1 === secondSquare.row;
+        }
+
+        else if (firstSquare.row == NUM_OF_SECOND_ROW_OF_WHITE_PLAYER) {
+            return secondSquare.col == firstSquare.col && firstSquare.row - 2 == secondSquare.row;
+        }
+
+        else return (secondSquare.col == firstSquare.col) && (firstSquare.row - 1 == secondSquare.row);
+    }
 
 
     moveSoldierOnBackBoard(arrayOfSquareObject) {
