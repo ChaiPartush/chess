@@ -52,7 +52,7 @@ class frontBoardLogic {
         let col = id.charAt(ColWordIndex + 4);// get the number after the word col
         const color = this.backBoardObject.boardGame[row][col].pieceColor;
         const name = this.backBoardObject.boardGame[row][col].pieceName;
-        return new squareObject(color, name, row, col);
+        return new squareObject(color, name, parseInt(row), parseInt(col));
     }
 
 }

@@ -53,6 +53,7 @@ class backBoardLogic {
         const firstSquare = arrayOfSquareObject[0];
         const secondSquare = arrayOfSquareObject[1];
         const soldierName = this.boardGame[firstSquare.row][firstSquare.col].pieceName;
+        const soldierColor = this.boardGame[firstSquare.row][firstSquare.col].pieceColor;
 
         if (soldierName == AllPieces.BLACK_KING.piece || soldierName == AllPieces.WHITE_KING.piece) {
             return Math.abs(secondSquare.col - firstSquare.col) <= 1 && Math.abs(secondSquare.row - firstSquare.row) <= 1;
@@ -62,7 +63,11 @@ class backBoardLogic {
             return secondSquare.col == firstSquare.col || secondSquare.row == firstSquare.row;
         }
 
-        if (soldierName == AllPieces.BLACK_PAWN.piece || soldierName == AllPieces.WHITE_PAWN.piece) {
+        if (soldierName == AllPieces.BLACK_PAWN.piece && soldierColor == AllPieces.BLACK_PAWN.color) {
+            return (secondSquare.col == firstSquare.col) && (firstSquare.row + 1 === secondSquare.row);
+        }
+
+        if (soldierName == AllPieces.WHITE_PAWN.piece && soldierColor == AllPieces.WHITE_PAWN.color) {
             return (secondSquare.col == firstSquare.col) && (firstSquare.row - 1 == secondSquare.row);
         }
 
