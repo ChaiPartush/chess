@@ -6,6 +6,8 @@ function include(file) {
     document.getElementsByTagName('head').item(0).appendChild(script);
 }
 
+include('backboardLogic.js');
+include('frontBoardLogic.js');
+include('squareObject.js');
+include('pieces.js');
 include('client.js');
-include('coordinates.js');
-include('pieces.js')
