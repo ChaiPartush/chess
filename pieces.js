@@ -10,9 +10,9 @@ const FirstRowOfUserBoard = {
     BISHOP: 'bishop',
     QUEEN: 'queen',
     KING: 'king',
-    BISHOP: 'bishop',
-    KNIGHT: 'knight',
-    ROOK: 'Rook'
+    SECOND_BISHOP: 'bishop',
+    SECOND_KNIGHT: 'knight',
+    SECOND_ROOK: 'Rook'
 }
 
 var secondRowUserBoard = {

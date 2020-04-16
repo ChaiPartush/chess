@@ -11,7 +11,7 @@ class backBoardLogic {
     }
 
     organzieBackBoardStartPosision() {
-        const firstRowPieces = Object.keys(FirstRowOfUserBoard);
+        const firstRowPieces = Object.values(FirstRowOfUserBoard);
         for (let row = 0; row < this.boardGame.length; row++) {
             for (let col = 0; col < this.boardGame[row].length; col++) {
                 switch (row) {
@@ -55,32 +55,29 @@ class backBoardLogic {
         const soldierName = this.boardGame[firstSquare.row][firstSquare.col].pieceName;
         const soldierColor = this.boardGame[firstSquare.row][firstSquare.col].pieceColor;
 
-        if (soldierName == AllPieces.BLACK_KING.piece || soldierName == AllPieces.WHITE_KING.piece) {
-            return Math.abs(secondSquare.col - firstSquare.col) <= 1 && Math.abs(secondSquare.row - firstSquare.row) <= 1;
-        }
+        switch (soldierName) {
 
-        if (soldierName == AllPieces.BLACK_ROOK.piece || soldierName == AllPieces.WHITE_ROOK.piece) {
-            return secondSquare.col == firstSquare.col || secondSquare.row == firstSquare.row;
-        }
+            case AllPieces.BLACK_KING.piece:
+                return Math.abs(secondSquare.col - firstSquare.col) <= 1 && Math.abs(secondSquare.row - firstSquare.row) <= 1;
 
-        if (soldierName == AllPieces.BLACK_PAWN.piece && soldierColor == AllPieces.BLACK_PAWN.color) {
-            return (secondSquare.col == firstSquare.col) && (firstSquare.row + 1 === secondSquare.row);
-        }
+            case AllPieces.BLACK_ROOK.piece:
+                return secondSquare.col == firstSquare.col || secondSquare.row == firstSquare.row;
 
-        if (soldierName == AllPieces.WHITE_PAWN.piece && soldierColor == AllPieces.WHITE_PAWN.color) {
-            return (secondSquare.col == firstSquare.col) && (firstSquare.row - 1 == secondSquare.row);
-        }
+            case AllPieces.BLACK_PAWN.piece:
+                if (soldierColor == AllPieces.BLACK_PAWN.color) {
+                    return (secondSquare.col == firstSquare.col) && (firstSquare.row + 1 === secondSquare.row);
+                }
+                else return (secondSquare.col == firstSquare.col) && (firstSquare.row - 1 == secondSquare.row);
 
-        if (soldierName == AllPieces.BLACK_BISHOP.piece || soldierName == AllPieces.WHITE_BISHOP.piece) {
-            return Math.abs(secondSquare.col - firstSquare.col) > 1 && Math.abs(secondSquare.row - firstSquare.row) > 1;
-        }
+            case AllPieces.BLACK_BISHOP.piece:
+                return Math.abs(secondSquare.col - firstSquare.col) > 1 && Math.abs(secondSquare.row - firstSquare.row) > 1;
 
-        if (soldierName == AllPieces.BLACK_KNIGHT.piece || soldierName == AllPieces.WHITE_KNIGHT.piece) {
-            return (Math.abs(secondSquare.col - firstSquare.col) == 2 && Math.abs(secondSquare.row - firstSquare.row) == 1)
-                || (Math.abs(secondSquare.col - firstSquare.col) == 1 && Math.abs(secondSquare.row - firstSquare.row) == 2);
-        }
+            case AllPieces.BLACK_KNIGHT.piece:
+                return (Math.abs(secondSquare.col - firstSquare.col) == 2 && Math.abs(secondSquare.row - firstSquare.row) == 1)
+                    || (Math.abs(secondSquare.col - firstSquare.col) == 1 && Math.abs(secondSquare.row - firstSquare.row) == 2);
 
-        else return true; //the queen can move any direction with any amount of steps
+            default: return true; //the queen can move any direction with any amount of steps
+        }
     }
 
 
