@@ -56,11 +56,13 @@ class backBoardLogic {
 
         switch (soldierName) {
 
+            case AllPieces.BLACK_ROOK.piece:
+                let whenIsTheSameCol = (secondSquare.col == firstSquare.col) ? this.rookMovement(firstSquare, secondSquare, false) : false;
+                let whenIsTheSameRow = (secondSquare.row == firstSquare.row) ? this.rookMovement(firstSquare, secondSquare, true) : false;
+                return whenIsTheSameCol || whenIsTheSameRow;
+
             case AllPieces.BLACK_KING.piece:
                 return Math.abs(secondSquare.col - firstSquare.col) <= 1 && Math.abs(secondSquare.row - firstSquare.row) <= 1;
-
-            case AllPieces.BLACK_ROOK.piece:
-                return secondSquare.col == firstSquare.col || secondSquare.row == firstSquare.row;
 
             case AllPieces.BLACK_PAWN.piece:
                 return this.pawnMovement(firstSquare, secondSquare)
@@ -75,6 +77,20 @@ class backBoardLogic {
             default: return true; //the queen can move any direction with any amount of steps
         }
     }
+
+    rookMovement(firstSquare, secondSquare, theSamePartcoordinateIsRow) {
+        const stratIndex = theSamePartcoordinateIsRow ? Math.min(firstSquare.col, secondSquare.col) : Math.min(firstSquare.row, secondSquare.row);
+        const endIndex = theSamePartcoordinateIsRow ? Math.max(firstSquare.col, secondSquare.col) : Math.max(firstSquare.row, secondSquare.row);
+        for (let i = stratIndex + 1; i < endIndex; i++) {
+            const squreContent = theSamePartcoordinateIsRow ? this.boardGame[firstSquare.row][i].pieceName : this.boardGame[i][firstSquare.col].pieceName;
+            if (squreContent != AllPieces.Empty) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
 
 
     pawnMovement(firstSquare, secondSquare) {
