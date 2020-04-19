@@ -120,7 +120,7 @@ class backBoardLogic {
         const secondSquareObject = arrayOfSquareObject[1];
 
         const squareOfFirstClickInBackendArray = this.boardGame[firstSqureObject.row][firstSqureObject.col];
-        const squareOfSecondClickInBackendArray = this.boardGame[secondSquareObject.row][secondSquareObject.col];
+        const squareOfSecondClickInBackendArray = this.boardGame[secondSquareObject.row][secondSquareObject.col] ;
 
         squareOfSecondClickInBackendArray.pieceColor = squareOfFirstClickInBackendArray.pieceColor;
         squareOfSecondClickInBackendArray.pieceName = squareOfFirstClickInBackendArray.pieceName;
