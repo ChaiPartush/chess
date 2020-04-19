@@ -9,5 +9,5 @@ function include(file) {
 include('backboardLogic.js');
 include('frontBoardLogic.js');
 include('squareObject.js');
-include('pieces.js');
+include('consts.js');
 include('client.js');
