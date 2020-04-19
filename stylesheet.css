@@ -6,6 +6,7 @@
     text-align: center;
     max-width: 90%;
     max-height: 90%;
+    user-select: none;
 }
 .black {
     background-color: #999;
@@ -20,6 +21,7 @@
     text-align: center;
     display: block;
     top:100%;
+    user-select: none;
 }
 .white {
     float: left;
@@ -34,5 +36,7 @@
     font-size: 50px;
     text-align: center;
     margin: auto;
+    user-select: none;
+    
 }
 
