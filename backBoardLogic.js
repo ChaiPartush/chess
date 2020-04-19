@@ -80,17 +80,22 @@ class backBoardLogic {
     pawnMovement(firstSquare, secondSquare) {
         const soldierColor = this.boardGame[firstSquare.row][firstSquare.col].pieceColor;
         if (soldierColor == AllPieces.BLACK_PAWN.color) {
-            if (firstSquare.row == NUM_OF_SECOND_ROW_OF_BLACK_PLAYER) {
-                return secondSquare.col == firstSquare.col && firstSquare.row + 2 === secondSquare.row;
+            if (firstSquare.row == FIRST_BLACK_PAWN_ROW_POSITION) {
+                return secondSquare.col == firstSquare.col && (firstSquare.row + 2 == secondSquare.row ||
+                    firstSquare.row + 1 == secondSquare.row);
             }
-            else return secondSquare.col == firstSquare.col && firstSquare.row + 1 === secondSquare.row;
+            else return secondSquare.col == firstSquare.col && firstSquare.row + 1 == secondSquare.row;
         }
 
-        else if (firstSquare.row == NUM_OF_SECOND_ROW_OF_WHITE_PLAYER) {
-            return secondSquare.col == firstSquare.col && firstSquare.row - 2 == secondSquare.row;
+        else {
+            if (firstSquare.row == FIRST_WHITE_PAWN_ROW_POSITION) {
+                return secondSquare.col == firstSquare.col && (firstSquare.row - 2 == secondSquare.row ||
+                    firstSquare.row - 1 == secondSquare.row);
+            }
+            else return (secondSquare.col == firstSquare.col) && (firstSquare.row - 1 == secondSquare.row);
         }
 
-        else return (secondSquare.col == firstSquare.col) && (firstSquare.row - 1 == secondSquare.row);
+
     }
 
 
