@@ -13,7 +13,7 @@ class backBoardLogic {
     organzieBackBoardStartPosision() {
         const firstRowPieces = Object.values(FirstRowOfUserBoard);
         for (let row = 0; row < this.boardGame.length; row++) {
-            for (let col = 0; col < this.boardGame[row].length; col++) {
+            for (let col = 0; col < this.boardGame[row].length; col++)   {
                 switch (row) {
 
 
