@@ -13,7 +13,7 @@ class backBoardLogic {
     organzieBackBoardStartPosision() {
         const firstRowPieces = Object.values(FirstRowOfUserBoard);
         for (let row = 0; row < this.boardGame.length; row++) {
-            for (let col = 0; col < this.boardGame[row].length; col++)   {
+            for (let col = 0; col < this.boardGame[row].length; col++) {
                 switch (row) {
 
 
@@ -68,7 +68,7 @@ class backBoardLogic {
                 return this.pawnMovement(firstSquare, secondSquare)
 
             case AllPieces.BLACK_BISHOP.piece:
-                return Math.abs(secondSquare.col - firstSquare.col) > 1 && Math.abs(secondSquare.row - firstSquare.row) > 1;
+                return (Math.abs(secondSquare.col - firstSquare.col)) == (Math.abs(secondSquare.row - firstSquare.row));
 
             case AllPieces.BLACK_KNIGHT.piece:
                 return (Math.abs(secondSquare.col - firstSquare.col) == 2 && Math.abs(secondSquare.row - firstSquare.row) == 1)
@@ -120,7 +120,7 @@ class backBoardLogic {
         const secondSquareObject = arrayOfSquareObject[1];
 
         const squareOfFirstClickInBackendArray = this.boardGame[firstSqureObject.row][firstSqureObject.col];
-        const squareOfSecondClickInBackendArray = this.boardGame[secondSquareObject.row][secondSquareObject.col] ;
+        const squareOfSecondClickInBackendArray = this.boardGame[secondSquareObject.row][secondSquareObject.col];
 
         squareOfSecondClickInBackendArray.pieceColor = squareOfFirstClickInBackendArray.pieceColor;
         squareOfSecondClickInBackendArray.pieceName = squareOfFirstClickInBackendArray.pieceName;
