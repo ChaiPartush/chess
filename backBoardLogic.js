@@ -68,7 +68,8 @@ class backBoardLogic {
                 return this.pawnMovement(firstSquare, secondSquare)
 
             case AllPieces.BLACK_BISHOP.piece:
-                return (Math.abs(secondSquare.col - firstSquare.col)) == (Math.abs(secondSquare.row - firstSquare.row));
+                return (Math.abs(secondSquare.col - firstSquare.col) == Math.abs(secondSquare.row - firstSquare.row))
+                    && this.bishopMovements(firstSquare, secondSquare);
 
             case AllPieces.BLACK_KNIGHT.piece:
                 return (Math.abs(secondSquare.col - firstSquare.col) == 2 && Math.abs(secondSquare.row - firstSquare.row) == 1)
@@ -88,6 +89,38 @@ class backBoardLogic {
             }
         }
         return true;
+    }
+
+    bishopMovements(firstSqure, secondSquare) {
+        const isRowIncrease = firstSqure.row < secondSquare.row;
+        const isColIncrease = firstSqure.col < secondSquare.col;
+
+        let row = isRowIncrease ? firstSqure.row + 1 : firstSqure.row - 1;
+        let col = isColIncrease ? firstSqure.col + 1 : firstSqure.col - 1;
+        const secondRow = secondSquare.row;
+        const secondCol = secondSquare.col;
+
+        do {
+
+            let squareContent = this.boardGame[row][col].pieceName;
+            if (squareContent != AllPieces.Empty) {
+                return false;
+            }
+            let counters = this.manageCounterOfBishopForLook(isRowIncrease, isColIncrease, row, col);
+            row = counters.row;
+            col = counters.col;
+        } while (row != secondRow && col != secondCol)
+
+        return true;
+    }
+
+    manageCounterOfBishopForLook(isRowIncrease, isColIncrease, row, col) {
+        let forRowCounter = isRowIncrease ? row + 1 : row - 1;
+        let forColCounter = isColIncrease ? col + 1 : col - 1;
+        return {
+            row: forRowCounter,
+            col: forColCounter
+        };
     }
 
 
