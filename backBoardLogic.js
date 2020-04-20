@@ -62,7 +62,8 @@ class backBoardLogic {
                 return whenIsTheSameCol || whenIsTheSameRow;
 
             case AllPieces.BLACK_KING.piece:
-                return Math.abs(secondSquare.col - firstSquare.col) <= 1 && Math.abs(secondSquare.row - firstSquare.row) <= 1;
+                return (Math.abs(secondSquare.col - firstSquare.col) <= 1 && Math.abs(secondSquare.row - firstSquare.row) <= 1 &&
+                    this.boardGame[secondSquare.row][secondSquare.col].pieceName == AllPieces.Empty);
 
             case AllPieces.BLACK_PAWN.piece:
                 return this.pawnMovement(firstSquare, secondSquare)
