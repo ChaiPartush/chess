@@ -26,7 +26,8 @@ class frontBoardLogic {
     }
 
     actionWhenTwoClicksWasPressed() {
-        if (this.arrayOfSquareObject[0] === this.arrayOfSquareObject[1]) {
+        if ((this.arrayOfSquareObject[0].row == this.arrayOfSquareObject[1].row) &&
+            (this.arrayOfSquareObject[0].col == this.arrayOfSquareObject[1].col)) {
             alert("Please enter the place you want to move this piece")
         }
 
