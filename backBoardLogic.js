@@ -57,9 +57,7 @@ class backBoardLogic {
         switch (soldierName) {
 
             case AllPieces.BLACK_ROOK.piece:
-                let whenIsTheSameCol = (secondSquare.col == firstSquare.col) ? this.rookMovement(firstSquare, secondSquare, false) : false;
-                let whenIsTheSameRow = (secondSquare.row == firstSquare.row) ? this.rookMovement(firstSquare, secondSquare, true) : false;
-                return whenIsTheSameCol || whenIsTheSameRow;
+                return this.rookMovement(firstSquare, secondSquare);
 
             case AllPieces.BLACK_KING.piece:
                 return (Math.abs(secondSquare.col - firstSquare.col) <= 1 && Math.abs(secondSquare.row - firstSquare.row) <= 1 &&
@@ -69,18 +67,34 @@ class backBoardLogic {
                 return this.pawnMovement(firstSquare, secondSquare)
 
             case AllPieces.BLACK_BISHOP.piece:
-                return (Math.abs(secondSquare.col - firstSquare.col) == Math.abs(secondSquare.row - firstSquare.row))
-                    && this.bishopMovements(firstSquare, secondSquare);
+                return this.bishopMovement(firstSquare, secondSquare);
 
             case AllPieces.BLACK_KNIGHT.piece:
                 return (Math.abs(secondSquare.col - firstSquare.col) == 2 && Math.abs(secondSquare.row - firstSquare.row) == 1)
                     || (Math.abs(secondSquare.col - firstSquare.col) == 1 && Math.abs(secondSquare.row - firstSquare.row) == 2);
 
-            default: return true; //the queen can move any direction with any amount of steps
+            case AllPieces.BLACK_QUEEN.piece:
+                return this.queenMovement(firstSquare, secondSquare);
         }
     }
 
-    rookMovement(firstSquare, secondSquare, theSamePartcoordinateIsRow) {
+    queenMovement(firstSquare, secondSquare) {
+        return this.rookMovement(firstSquare, secondSquare) || this.bishopMovement(firstSquare, secondSquare);
+    }
+
+    rookMovement(firstSquare, secondSquare) {
+        let theSamePartcoordinateIsRow;
+        if (secondSquare.col == firstSquare.col) {
+            theSamePartcoordinateIsRow = false;
+        }
+        else if (secondSquare.row == firstSquare.row) {
+            theSamePartcoordinateIsRow = true;
+        }
+
+        else {
+            return false
+        }
+
         const stratIndex = theSamePartcoordinateIsRow ? Math.min(firstSquare.col, secondSquare.col) : Math.min(firstSquare.row, secondSquare.row);
         const endIndex = theSamePartcoordinateIsRow ? Math.max(firstSquare.col, secondSquare.col) : Math.max(firstSquare.row, secondSquare.row);
         for (let i = stratIndex + 1; i < endIndex; i++) {
@@ -92,12 +106,15 @@ class backBoardLogic {
         return true;
     }
 
-    bishopMovements(firstSqure, secondSquare) {
-        const isRowIncrease = firstSqure.row < secondSquare.row;
-        const isColIncrease = firstSqure.col < secondSquare.col;
+    bishopMovement(firstSquare, secondSquare) {
+        if ((Math.abs(secondSquare.col - firstSquare.col) != Math.abs(secondSquare.row - firstSquare.row))) {
+            return false
+        }
+        const isRowIncrease = firstSquare.row < secondSquare.row;
+        const isColIncrease = firstSquare.col < secondSquare.col;
 
-        let row = isRowIncrease ? firstSqure.row + 1 : firstSqure.row - 1;
-        let col = isColIncrease ? firstSqure.col + 1 : firstSqure.col - 1;
+        let row = isRowIncrease ? firstSquare.row + 1 : firstSquare.row - 1;
+        let col = isColIncrease ? firstSquare.col + 1 : firstSquare.col - 1;
         const secondRow = secondSquare.row;
         const secondCol = secondSquare.col;
 
