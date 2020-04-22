@@ -41,7 +41,7 @@ class backBoardLogic {
 
                     default:
                         this.boardGame[row][col].pieceColor = ColorsPieces.NO_Color;
-                        this.boardGame[row][col].pieceName = '';
+                        this.boardGame[row][col].pieceName = AllPieces.Empty;
                 }
             }
 
@@ -53,18 +53,22 @@ class backBoardLogic {
         const firstSquare = arrayOfSquareObject[0];
         const secondSquare = arrayOfSquareObject[1];
         const soldierName = this.boardGame[firstSquare.row][firstSquare.col].pieceName;
+        const soldierColor = this.boardGame[firstSquare.row][firstSquare.col].pieceColor;
+        const checkMovements = new piecesMovements(firstSquare, secondSquare, this.boardGame);
+
 
         switch (soldierName) {
 
             case AllPieces.BLACK_ROOK.piece:
-                return this.rookMovement(firstSquare, secondSquare);
+                return checkMovements.rookMovement();
 
             case AllPieces.BLACK_KING.piece:
                 return (Math.abs(secondSquare.col - firstSquare.col) <= 1 && Math.abs(secondSquare.row - firstSquare.row) <= 1 &&
                     this.boardGame[secondSquare.row][secondSquare.col].pieceName == AllPieces.Empty);
 
             case AllPieces.BLACK_PAWN.piece:
-                return this.pawnMovement(firstSquare, secondSquare)
+                return (checkMovements.checkIfTherePieceInFrontOfIt()) &&
+                    ((soldierColor == ColorsPieces.BLACK) ? checkMovements.blackPawnMovement() : checkMovements.whitePawnMovemetnt());
 
             case AllPieces.BLACK_BISHOP.piece:
                 return this.bishopMovement(firstSquare, secondSquare);
@@ -139,30 +143,6 @@ class backBoardLogic {
             row: forRowCounter,
             col: forColCounter
         };
-    }
-
-
-
-
-    pawnMovement(firstSquare, secondSquare) {
-        const soldierColor = this.boardGame[firstSquare.row][firstSquare.col].pieceColor;
-        if (soldierColor == AllPieces.BLACK_PAWN.color) {
-            if (firstSquare.row == FIRST_BLACK_PAWN_ROW_POSITION) {
-                return secondSquare.col == firstSquare.col && (firstSquare.row + 2 == secondSquare.row ||
-                    firstSquare.row + 1 == secondSquare.row);
-            }
-            else return secondSquare.col == firstSquare.col && firstSquare.row + 1 == secondSquare.row;
-        }
-
-        else {
-            if (firstSquare.row == FIRST_WHITE_PAWN_ROW_POSITION) {
-                return secondSquare.col == firstSquare.col && (firstSquare.row - 2 == secondSquare.row ||
-                    firstSquare.row - 1 == secondSquare.row);
-            }
-            else return (secondSquare.col == firstSquare.col) && (firstSquare.row - 1 == secondSquare.row);
-        }
-
-
     }
 
 
