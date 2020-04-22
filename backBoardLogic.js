@@ -59,90 +59,24 @@ class backBoardLogic {
 
         switch (soldierName) {
 
-            case AllPieces.BLACK_ROOK.piece:
+            case AllPieces.ROOK:
                 return checkMovements.rookMovement();
 
-            case AllPieces.BLACK_KING.piece:
-                return (Math.abs(secondSquare.col - firstSquare.col) <= 1 && Math.abs(secondSquare.row - firstSquare.row) <= 1 &&
-                    this.boardGame[secondSquare.row][secondSquare.col].pieceName == AllPieces.Empty);
+            case AllPieces.KNIGHT:
+                return checkMovements.knightMovement();
 
-            case AllPieces.BLACK_PAWN.piece:
-                return (checkMovements.checkIfTherePieceInFrontOfIt()) &&
-                    ((soldierColor == ColorsPieces.BLACK) ? checkMovements.blackPawnMovement() : checkMovements.whitePawnMovemetnt());
+            case AllPieces.KING:
+                return checkMovements.kingMovement();
 
-            case AllPieces.BLACK_BISHOP.piece:
-                return this.bishopMovement(firstSquare, secondSquare);
+            case AllPieces.BISHOP:
+                return checkMovements.bishopMovement();
 
-            case AllPieces.BLACK_KNIGHT.piece:
-                return (Math.abs(secondSquare.col - firstSquare.col) == 2 && Math.abs(secondSquare.row - firstSquare.row) == 1)
-                    || (Math.abs(secondSquare.col - firstSquare.col) == 1 && Math.abs(secondSquare.row - firstSquare.row) == 2);
+            case AllPieces.QUEEN:
+                return checkMovements.queenMovement();
 
-            case AllPieces.BLACK_QUEEN.piece:
-                return this.queenMovement(firstSquare, secondSquare);
+            case AllPieces.PAWN:
+                return checkMovements.pawnMovement();
         }
-    }
-
-    queenMovement(firstSquare, secondSquare) {
-        return this.rookMovement(firstSquare, secondSquare) || this.bishopMovement(firstSquare, secondSquare);
-    }
-
-    rookMovement(firstSquare, secondSquare) {
-        let theSamePartcoordinateIsRow;
-        if (secondSquare.col == firstSquare.col) {
-            theSamePartcoordinateIsRow = false;
-        }
-        else if (secondSquare.row == firstSquare.row) {
-            theSamePartcoordinateIsRow = true;
-        }
-
-        else {
-            return false
-        }
-
-        const stratIndex = theSamePartcoordinateIsRow ? Math.min(firstSquare.col, secondSquare.col) : Math.min(firstSquare.row, secondSquare.row);
-        const endIndex = theSamePartcoordinateIsRow ? Math.max(firstSquare.col, secondSquare.col) : Math.max(firstSquare.row, secondSquare.row);
-        for (let i = stratIndex + 1; i < endIndex; i++) {
-            const squreContent = theSamePartcoordinateIsRow ? this.boardGame[firstSquare.row][i].pieceName : this.boardGame[i][firstSquare.col].pieceName;
-            if (squreContent != AllPieces.Empty) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    bishopMovement(firstSquare, secondSquare) {
-        if ((Math.abs(secondSquare.col - firstSquare.col) != Math.abs(secondSquare.row - firstSquare.row))) {
-            return false
-        }
-        const isRowIncrease = firstSquare.row < secondSquare.row;
-        const isColIncrease = firstSquare.col < secondSquare.col;
-
-        let row = isRowIncrease ? firstSquare.row + 1 : firstSquare.row - 1;
-        let col = isColIncrease ? firstSquare.col + 1 : firstSquare.col - 1;
-        const secondRow = secondSquare.row;
-        const secondCol = secondSquare.col;
-
-        do {
-
-            let squareContent = this.boardGame[row][col].pieceName;
-            if (squareContent != AllPieces.Empty) {
-                return false;
-            }
-            let counters = this.manageCounterOfBishopForLook(isRowIncrease, isColIncrease, row, col);
-            row = counters.row;
-            col = counters.col;
-        } while (row != secondRow && col != secondCol)
-
-        return true;
-    }
-
-    manageCounterOfBishopForLook(isRowIncrease, isColIncrease, row, col) {
-        let forRowCounter = isRowIncrease ? row + 1 : row - 1;
-        let forColCounter = isColIncrease ? col + 1 : col - 1;
-        return {
-            row: forRowCounter,
-            col: forColCounter
-        };
     }
 
 
