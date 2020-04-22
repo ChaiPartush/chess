@@ -7,6 +7,7 @@ function include(file) {
 }
 
 include('backBoardLogic.js');
+include('piecesMovements.js');
 include('frontBoardLogic.js');
 include('squareObject.js');
 include('consts.js');
