@@ -4,9 +4,27 @@ class backBoardLogic {
         for (let row = 0; row < 8; row++) {
             this.boardGame[row] = [];
             for (let col = 0; col < 8; col++) {
-                let createPiece = new squareObject(ColorsPieces.NO_Color, AllPieces.Empty, row, col);
+                let createPiece = new squareObject(ColorsPieces.NO_COLOR, AllPieces.Empty, row, col);
                 this.boardGame[row][col] = createPiece;
             }
+        }
+        this.arrayOfSquareObject = [];
+        this.arrayOfClicksElementsId = [];
+    }
+
+
+    getBackBoardGame() {
+        return this.arrayOfSquareObject;
+    }
+
+
+    clickOnSquare(id) {
+        let squareObjectById = this.parseIdToCordinatesObject(id);
+        if (this.arrayOfSquareObject.length < 2) {
+            this.actionWhenNotpressedTwoClicksYet(squareObjectById, id);
+        }
+        if (this.arrayOfSquareObject.length == 2) {
+            this.actionWhenTwoClicksWasPressed();
         }
     }
 
@@ -48,12 +66,10 @@ class backBoardLogic {
         }
 
     }
-
     checkIfSoldierCanDoThisMovment(arrayOfSquareObject) {
         const firstSquare = arrayOfSquareObject[0];
         const secondSquare = arrayOfSquareObject[1];
         const soldierName = this.boardGame[firstSquare.row][firstSquare.col].pieceName;
-        const soldierColor = this.boardGame[firstSquare.row][firstSquare.col].pieceColor;
         const checkMovements = new piecesMovements(firstSquare, secondSquare, this.boardGame);
 
 
@@ -78,8 +94,6 @@ class backBoardLogic {
                 return checkMovements.pawnMovement();
         }
     }
-
-
     moveSoldierOnBackBoard(arrayOfSquareObject) {
         const firstSqureObject = arrayOfSquareObject[0];
         const secondSquareObject = arrayOfSquareObject[1];
@@ -93,7 +107,40 @@ class backBoardLogic {
         squareOfFirstClickInBackendArray.pieceColor = ColorsPieces.NO_Color;;
         squareOfFirstClickInBackendArray.pieceName = AllPieces.Empty;
     }
+    actionWhenNotpressedTwoClicksYet(squaresObjectById, id) {
+        if (this.arrayOfSquareObject.length == 0 && squaresObjectById.pieceName == AllPieces.Empty) {
+            alert("Please pick on of the Pieces")
+        }
+        else {
+            this.arrayOfSquareObject.push(squaresObjectById);
+            this.arrayOfClicksElementsId.push(id);
+        }
+    }
+    actionWhenTwoClicksWasPressed() {
+        if ((this.arrayOfSquareObject[0].row == this.arrayOfSquareObject[1].row) &&
+            (this.arrayOfSquareObject[0].col == this.arrayOfSquareObject[1].col)) {
+            alert("Please enter the place you want to move this piece");
+        }
 
+        else {
+            if (this.checkIfSoldierCanDoThisMovment(this.arrayOfSquareObject)) {
+                this.moveSoldierOnBackBoard(this.arrayOfSquareObject)
+            }
+            else {
+                alert("This soldier cant do this movement");
+            }
+        }
+        this.arrayOfSquareObject.length = 0;
+        this.arrayOfClicksElementsId.length = 0;
 
-
+    }
+    parseIdToCordinatesObject(id) {
+        let RowWordIndex = id.search("row:");
+        let row = id.charAt(RowWordIndex + 4); // get the number after the word row
+        let ColWordIndex = id.search("col:");
+        let col = id.charAt(ColWordIndex + 4);// get the number after the word col
+        const color = this.boardGame[row][col].pieceColor;
+        const name = this.boardGame[row][col].pieceName;
+        return new squareObject(color, name, parseInt(row), parseInt(col));
+    }
 }
